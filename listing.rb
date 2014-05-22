@@ -1,4 +1,3 @@
-
 class Listing
     attr_accessor \
         :id,
@@ -19,15 +18,11 @@ class Listing
     end
 
     def raw_file_path
-      raw_file_name
-    end
-
-    def staged_file_path
-      "./data/recordings/" + File.basename(raw_file_name)
+      raw_file_name.chomp
     end
 
     def mp3_file_path
-      "./data/recordings/" + get_file_name + ".mp3"
+      "./" + get_file_name + ".mp3"
     end
 
     def nas_file_path
