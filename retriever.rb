@@ -22,25 +22,15 @@ private
     def retrieve_by_id(listing_id, level)
         puts "Retrieving by id: " + listing_id
         listings = @gip.get_listings_by_id(listing_id)
-        #db_listings = get_current_listings(listings)
         handle_listings(listings, level)
     end
 
     def retrieve_by_search(level)
         puts "Retrieving via search"
         targetedListings = get_targeted_listings();
-        #listings = get_current_listings(targetedListings)
         handle_listings(targetedListings, level)
     end
 
-#    def retrieve_listings(listings, level)
-#        listings.each do |listing|
-#          puts listing.to_s()
-#        end
-#        #download_listings(listings, level)
-#        #convert_to_mp3()
-#    end
- 
     def convert_to_mp3()
         puts "  Converting m4a files to mp3, adding metadata tags at the same time"
         listings = @repository.get_listings({ "downloaded" => true, "converted_to_mp3" => false })
@@ -91,28 +81,6 @@ private
             end
         end
     end
-
-    #def get_current_listings(current_listings)
-        #puts "  Looking up listings in db"
-        #consolidated_listings = Array.new
-        #current_listings.each() do |current_listing|
-        #    db_listing = @repository.get_listing(
-        #        current_listing.dj,
-        #        current_listing.station,
-        #        current_listing.short_description,
-        #        current_listing.long_description)
-        #    
-        #    consolidated_listing = current_listing 
-        #    if !db_listing.nil?
-        #        db_listing.id = current_listing.id
-        #        consolidated_listing = db_listing
-        #    else
-        #        @repository.add_new_listing(current_listing)
-        #    end
-        #    consolidated_listings.push(consolidated_listing)
-        #end
-        #consolidated_listings
-    #end
 
     def get_targeted_listings()
         listings = @gip.get_listings()
@@ -219,27 +187,6 @@ private
     end
 
     def ensure_listing_moved_to_nas_drive(listing)
-    end
-
-    def get_file_name(listing)
-        d = listing.date
-        dj = sanitise_string(listing.dj).sub(/^BBC_Radio_1s_/, "").sub(/\s-\s\S+day/, "")
-        description = sanitise_string(listing.short_description)
-        f = "./downloaded/" +
-            d.year.to_s() + "-" +
-            d.month.to_s().rjust(2, "0") + "-" +
-            d.day.to_s().rjust(2, "0") + "-" +
-            dj
-        if !/\D+/.match(description).nil?
-            f = f + "-" + description
-        end
-        f = f + ".m4a"
-    end
-
-    def sanitise_string(s)
-        s = s.gsub(/['.,"!^#£$?\\\/]/, "")
-        s = s.gsub(/[&]/, "and")
-        s.gsub(/\s/, "_")
     end
 
     def get_targets()
