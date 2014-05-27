@@ -38,7 +38,7 @@ private
         puts "Converting m4a to mp3"
 
         artist = listing.dj;
-        title = listing.date + " - " + listing.dj + " - " + listing.short_description;
+        title = listing.date + " - " + listing.dj + ": " + listing.short_description;
         album = "BBC - " + listing.dj;
         genre = "Dance";
 
