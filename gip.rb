@@ -3,7 +3,7 @@ class Gip
     def get_listings()
         lines = get_listings_data()
         results = Array.new()
-        lines.each do |line|
+        lines.each_line do |line|
             listing = parse_line(line)
             if !listing.nil?
                 results.push(listing)
@@ -15,7 +15,7 @@ class Gip
     def get_listings_by_id(listing_id)
         lines = get_listings_data()
         results = Array.new()
-        lines.each do |line|
+        lines.each_line do |line|
             if /^#{listing_id}:\s/.match(line)
                 match = /^(\d+):\s+(.*)\s+-\s+(.+), (BBC [^,]+),.*hours ago - (.+)$/.match(line)
                 if !match.nil?
